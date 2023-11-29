@@ -1,6 +1,6 @@
 # Leaflet-Beadando
 
-A beadandómban a budapesti sportlétesítményeket gyűjtöttem össze és jelenítettem meg. Minden létesítmény saját, egyedi markerrel jelöltem be, illetve geo.json segítségével bejelöltem mindegyiknek a területét különböző színnel. A markerekhez csatoltam pop-up buborékokat is, amelyben a létesítmény nevét, átlagos nézőszámát, illetve befogadóképességét tüntetem fel. Továbbá használtam egy Image Overlay-t a Puskás Aréna területén, ahol megfigyelhető az aréna kezdeti állapota.
+A beadandómban a budapesti sportlétesítményeket gyűjtöttem össze és jelenítettem meg. Minden létesítmény saját, egyedi markerrel jelöltem be, illetve geo.json segítségével bejelöltem mindegyiknek a területét különböző színnel. A polygonok színei az adott létesítmény befogadóképsségének a nagyságát jelölik. Továbbá az olyan létesítményekre, amelyekben NB1-es vagy NB2-es futball van, raktam köröket. A körök sugarának nagysága a befogadóképesség nagyságával függ össze. Minnél nagyobb a kör sugara annál jobban ki van használva a létesítmény befogadóképessége.  A markerekhez csatoltam pop-up buborékokat is, amelyben a létesítmény nevét, átlagos nézőszámát, illetve befogadóképességét tüntetem fel. Továbbá használtam egy Image Overlay-t a Puskás Aréna területén, ahol megfigyelhető az aréna kezdeti állapota.
 
 ## Térképek
 
