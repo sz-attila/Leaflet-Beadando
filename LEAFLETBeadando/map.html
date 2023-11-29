@@ -54,19 +54,19 @@
       var ftcIcon = L.marker([47.47662579761196, 19.094536950174945], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Groupama Aréna<b></br>Átlagos nézőszám: 9 206</br>Befogadóképesség: 23 700"
+        "<b>Groupama Aréna<b></br>Átlagos nézőszám: 9 206</br>Befogadóképesség: 23 700</br>Befogadóképesség kihasználtsága: 39%"
       );
 
       var mtkIcon = L.marker([47.49105147813091, 19.10683151182467], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Hidegkuti Nándor Stadion<b></br>Átlagos nézőszám: 2 927</br>Befogadóképesség: 5 322"
+        "<b>Hidegkuti Nándor Stadion<b></br>Átlagos nézőszám: 2 927</br>Befogadóképesség: 5 322 </br>Befogadóképesség kihasználtsága: 55%"
       );
 
       var ujpestIcon = L.marker([47.57508368328183, 19.08436769945224], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Szusza Ferenc Stadion<b></br>Átlagos nézőszám: 6 286</br>Befogadóképesség: 13 501"
+        "<b>Szusza Ferenc Stadion<b></br>Átlagos nézőszám: 6 286</br>Befogadóképesség: 13 501</br>Befogadóképesség kihasználtsága: 47%"
       );
 
       var nb1 = L.layerGroup([ftcIcon, mtkIcon, ujpestIcon]);
@@ -74,31 +74,31 @@
       var vasasIcon = L.marker([47.53721459803005, 19.080136149259044], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Illovszky Rudolf Stadion<b></br>Átlagos nézőszám: 1 514</br>Befogadóképesség: 5 054"
+        "<b>Illovszky Rudolf Stadion<b></br>Átlagos nézőszám: 1 514</br>Befogadóképesség: 5 054</br>Befogadóképesség kihasználtsága: 30%"
       );
 
       var honvedIcon = L.marker([47.44290492465924, 19.155523437168647], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Bozsik Aréna<b></br>Átlagos nézőszám: 2 365</br>Befogadóképesség: 8 200"
+        "<b>Bozsik Aréna<b></br>Átlagos nézőszám: 2 365</br>Befogadóképesség: 8 200</br>Befogadóképesség kihasználtsága: 29%"
       );
 
       var bvscIcon = L.marker([47.5241801849126, 19.092193997380274], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Szőnyi úti Stadion<b></br>Átlagos nézőszám: 684</br>Befogadóképesség: 11 000 (ebből 10000 lezárt ülőhely)"
+        "<b>Szőnyi úti Stadion<b></br>Átlagos nézőszám: 684</br>Befogadóképesség: 11 000 (ebből 10000 lezárt ülőhely)</br>Befogadóképesség kihasználtsága: 6%"
       );
 
       var soroksarIcon = L.marker([47.39055358100065, 19.112686386413152], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Szamosi Mihály Sporttelep<b></br>Átlagos nézőszám: 515</br>Befogadóképesség: 5 000"
+        "<b>Szamosi Mihály Sporttelep<b></br>Átlagos nézőszám: 515</br>Befogadóképesség: 5 000</br>Befogadóképesség kihasználtsága: 10%"
       );
 
       var bmteIcon = L.marker([47.42184991249716, 19.027735967508594], {
         icon: customIcon,
       }).bindPopup(
-        "<b>Promontor utcai Stadion<b></br>Átlagos nézőszám: 891</br>Befogadóképesség: 1 200"
+        "<b>Promontor utcai Stadion<b></br>Átlagos nézőszám: 891</br>Befogadóképesség: 1 200</br>Befogadóképesség kihasználtsága: 74%"
       );
 
       var nb2 = L.layerGroup([
@@ -467,39 +467,123 @@
         },
       ];
 
+      function stadiumColor(capacityNumber) {
+        if (capacityNumber < 5000) {
+          return "#00ff00";
+        } else if (capacityNumber < 10000) {
+          return "#ffff00";
+        } else if (capacityNumber < 20000) {
+          return "#ff8000";
+        } else if (capacityNumber < 70000) {
+          return "#ff0000";
+        } else {
+          return "#800000";
+        }
+      }
+
       L.geoJSON(states, {
         style: function (feature) {
           switch (feature.properties.team) {
             case "Ujpest":
-              return { color: "#6c0296" };
+              return { color: stadiumColor(13501) };
             case "Ferencvaros":
-              return { color: "#029602" };
+              return { color: stadiumColor(23700) };
             case "Honved":
-              return { color: "#ff0000" };
+              return { color: stadiumColor(8200) };
             case "MTK":
-              return { color: "#029ffa" };
+              return { color: stadiumColor(5322) };
             case "Vasas":
-              return { color: "#fa9b02" };
+              return { color: stadiumColor(5054) };
             case "Valogatott":
-              return { color: "#fa02dd" };
+              return { color: stadiumColor(67215) };
             case "MVM":
-              return { color: "#02fafa" };
+              return { color: stadiumColor(20028) };
             case "Papp":
-              return { color: "#fa02a5" };
+              return { color: stadiumColor(12500) };
             case "Atletika":
-              return { color: "#02fa3e" };
+              return { color: stadiumColor(36000) };
             case "Uszas":
-              return { color: "#fae502" };
+              return { color: stadiumColor(6000) };
             case "Hajos":
-              return { color: "#cfadff" };
+              return { color: stadiumColor(3500) };
             case "BMTE":
-              return { color: "#000000" };
+              return { color: stadiumColor(1200) };
             case "Soroksar":
-              return { color: "#ff5e5e" };
+              return { color: stadiumColor(5000) };
             case "BVSC":
-              return { color: "#5e5eff" };
+              return { color: stadiumColor(11000) };
           }
         },
+      }).addTo(map);
+
+      function circleRadius(utilizationOfCapacity) {
+        if (utilizationOfCapacity < 0.25) {
+          return 250;
+        } else if (utilizationOfCapacity < 0.5) {
+          return 500;
+        } else if (utilizationOfCapacity < 0.75) {
+          return 750;
+        } else if (utilizationOfCapacity < 1) {
+          return 1000;
+        } else {
+          return 1500;
+        }
+      }
+
+      const ftcCircle = L.circle([47.47662579761196, 19.094536950174945], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.39),
+      }).addTo(map);
+
+      const mtkCircle = L.circle([47.49105147813091, 19.10683151182467], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.55),
+      }).addTo(map);
+
+      const ujpestCircle = L.circle([47.57508368328183, 19.08436769945224], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.47),
+      }).addTo(map);
+
+      const vasasCircle = L.circle([47.53721459803005, 19.080136149259044], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.3),
+      }).addTo(map);
+
+      const honvedCircle = L.circle([47.44290492465924, 19.155523437168647], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.29),
+      }).addTo(map);
+
+      const bvscCircle = L.circle([47.5241801849126, 19.092193997380274], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.06),
+      }).addTo(map);
+
+      const soroksarCircle = L.circle([47.39055358100065, 19.112686386413152], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.1),
+      }).addTo(map);
+
+      const bmteCircle = L.circle([47.42184991249716, 19.027735967508594], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.74),
       }).addTo(map);
 
       var imageUrl = "puskas.png";
