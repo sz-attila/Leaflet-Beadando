@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budapesti Stadionok</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+      integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v1.1.1/maptiler-sdk.umd.js"></script>
+    <link
+      href="https://cdn.maptiler.com/maptiler-sdk-js/v1.1.1/maptiler-sdk.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.maptiler.com/leaflet-maptilersdk/v1.0.0/leaflet-maptilersdk.js"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      .leaflet-container {
+        height: 400px;
+        width: 600px;
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" style="width: 1920px; height: 1080px"></div>
+    <script>
+      var StadiumIcon = L.Icon.extend({
+        options: {
+          shadowUrl: "shadow_stadium.png",
+          iconSize: [46, 46],
+          shadowSize: [56, 50],
+          iconAnchor: [0, 20],
+          shadowAnchor: [-10, 21],
+          popupAnchor: [-3, -76],
+        },
+      });
+
+      var customIcon = new StadiumIcon({ iconUrl: "stadium.png" });
+
+      var ftcIcon = L.marker([47.47662579761196, 19.094536950174945], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Groupama Aréna<b></br>Átlagos nézőszám: 9 206</br>Befogadóképesség: 23 700</br>Befogadóképesség kihasználtsága: 39%"
+      );
+
+      var mtkIcon = L.marker([47.49105147813091, 19.10683151182467], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Hidegkuti Nándor Stadion<b></br>Átlagos nézőszám: 2 927</br>Befogadóképesség: 5 322 </br>Befogadóképesség kihasználtsága: 55%"
+      );
+
+      var ujpestIcon = L.marker([47.57508368328183, 19.08436769945224], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Szusza Ferenc Stadion<b></br>Átlagos nézőszám: 6 286</br>Befogadóképesség: 13 501</br>Befogadóképesség kihasználtsága: 47%"
+      );
+
+      var nb1 = L.layerGroup([ftcIcon, mtkIcon, ujpestIcon]);
+
+      var vasasIcon = L.marker([47.53721459803005, 19.080136149259044], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Illovszky Rudolf Stadion<b></br>Átlagos nézőszám: 1 514</br>Befogadóképesség: 5 054</br>Befogadóképesség kihasználtsága: 30%"
+      );
+
+      var honvedIcon = L.marker([47.44290492465924, 19.155523437168647], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Bozsik Aréna<b></br>Átlagos nézőszám: 2 365</br>Befogadóképesség: 8 200</br>Befogadóképesség kihasználtsága: 29%"
+      );
+
+      var bvscIcon = L.marker([47.5241801849126, 19.092193997380274], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Szőnyi úti Stadion<b></br>Átlagos nézőszám: 684</br>Befogadóképesség: 11 000 (ebből 10000 lezárt ülőhely)</br>Befogadóképesség kihasználtsága: 6%"
+      );
+
+      var soroksarIcon = L.marker([47.39055358100065, 19.112686386413152], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Szamosi Mihály Sporttelep<b></br>Átlagos nézőszám: 515</br>Befogadóképesség: 5 000</br>Befogadóképesség kihasználtsága: 10%"
+      );
+
+      var bmteIcon = L.marker([47.42184991249716, 19.027735967508594], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Promontor utcai Stadion<b></br>Átlagos nézőszám: 891</br>Befogadóképesség: 1 200</br>Befogadóképesség kihasználtsága: 74%"
+      );
+
+      var nb2 = L.layerGroup([
+        vasasIcon,
+        honvedIcon,
+        bvscIcon,
+        soroksarIcon,
+        bmteIcon,
+      ]);
+
+      var puskasIcon = L.marker([47.503090432000924, 19.097613807346523], {
+        icon: customIcon,
+      }).bindPopup("<b>Puskás Aréna<b></br>Befogadóképesség: 67 215");
+
+      var pappIcon = L.marker([47.50192297372438, 19.106454733696104], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Papp László Sport Aréna<b></br>Befogadóképesség: 12 500"
+      );
+
+      var hajosIcon = L.marker([47.52060035358824, 19.042503148746814], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Hajós Alfréd Nemzeti Sportuszoda<b></br>Befogadóképesség: 3 500"
+      );
+
+      var atletikaiIcon = L.marker([47.4648597213953, 19.069550603268276], {
+        icon: customIcon,
+      }).bindPopup(
+        "<b>Nemzeti Atlétikai Központ<b></br>Befogadóképesség: 36 000"
+      );
+
+      var uszasIcon = L.marker([47.54142479132391, 19.061535084639722], {
+        icon: customIcon,
+      }).bindPopup("<b>Duna Aréna<b></br>Befogadóképesség: 6 000");
+
+      var mvmIcon = L.marker([47.47353070226753, 19.10143275935692], {
+        icon: customIcon,
+      }).bindPopup("<b>MVM Dome<b></br>Befogadóképesség: 20 028");
+
+      var egyeb = L.layerGroup([
+        puskasIcon,
+        pappIcon,
+        hajosIcon,
+        atletikaiIcon,
+        uszasIcon,
+        mvmIcon,
+      ]);
+
+      var mbAttr =
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+      var mbUrl =
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
+
+      var streets = L.tileLayer(mbUrl, {
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: mbAttr,
+      });
+
+      var osm = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }
+      );
+
+      var map = L.map("map", {
+        center: [47.53194239329522, 19.084400480068574],
+        zoom: 12,
+        layers: [streets, nb1, nb2, egyeb],
+      });
+
+      const key = "Nj7HIiFAhvgO27zvP81G";
+
+      const mtLayer_sat = L.maptilerLayer({
+        apiKey: key,
+        style: "satellite", //optional
+      });
+
+      const mtLayer_street = L.maptilerLayer({
+        apiKey: key,
+        style: "streets-v2", //optional
+      });
+
+      var baseLayers = {
+        OpenStreetMap: osm,
+        Satellite: mtLayer_sat,
+        Streets: mtLayer_street,
+      };
+
+      var overlays = {
+        nb1: nb1,
+        nb2: nb2,
+        egyeb: egyeb,
+      };
+
+      var layerControl = L.control.layers(baseLayers, overlays).addTo(map);
+
+      var satellite = L.tileLayer(mbUrl, {
+        id: "mapbox/satellite-v9",
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: mbAttr,
+      });
+
+      var states = [
+        {
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              properties: { team: "Ujpest" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.08397426983865, 47.57601877358431],
+                    [19.08277264019941, 47.57488966535607],
+                    [19.087933210344033, 47.57233460621708],
+                    [19.0889095344252, 47.573347959036255],
+                    [19.086195138903093, 47.574607384494925],
+                    [19.086398986787913, 47.574875189451575],
+                    [19.08397426983865, 47.57601877358431],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Ferencvaros" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.09484065939955, 47.476834359074786],
+                    [19.09334935118747, 47.47496344026786],
+                    [19.0946797268588, 47.47375238366499],
+                    [19.09506596495632, 47.47429627481384],
+                    [19.095784796973334, 47.474397800538014],
+                    [19.097104443808007, 47.475971424180784],
+                    [19.09484065939955, 47.476834359074786],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Honved" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.153725239995595, 47.44486032946003],
+                    [19.15159938650922, 47.44276065646329],
+                    [19.154377729678686, 47.441016796542584],
+                    [19.154461921895518, 47.440618191873256],
+                    [19.15516703171585, 47.440447360376055],
+                    [19.156671967598726, 47.44177840778127],
+                    [19.156556203299886, 47.44187093923665],
+                    [19.15781908655879, 47.442810480183255],
+                    [19.15620891040362, 47.443700181520285],
+                    [19.153725239995595, 47.44486032946003],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "MTK" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.10476739674769, 47.49136454918204],
+                    [19.10554205089815, 47.49027157954427],
+                    [19.108684515844686, 47.49024853475879],
+                    [19.108791700695633, 47.4918649373291],
+                    [19.10476739674769, 47.49136454918204],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Valogatott" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.104337023163907, 47.50308676208013],
+                    [19.10067114485321, 47.50416561612863],
+                    [19.098130437113127, 47.505587708042555],
+                    [19.09631564587079, 47.5070833148682],
+                    [19.09497270035277, 47.501370357672016],
+                    [19.101977794548247, 47.50047535311407],
+                    [19.103629254579488, 47.50068378019597],
+                    [19.104337023163907, 47.50308676208013],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Vasas" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.079648278763244, 47.53840196923028],
+                    [19.07855852399976, 47.53618225333119],
+                    [19.080897666273614, 47.53572115170769],
+                    [19.08158032413212, 47.537068923869015],
+                    [19.081657025584406, 47.53756666688713],
+                    [19.08184023292813, 47.53791150761927],
+                    [19.079648278763244, 47.53840196923028],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "MVM" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.099814415072075, 47.47500039188631],
+                    [19.09779893732056, 47.472265665906406],
+                    [19.099051860641367, 47.47165412950281],
+                    [19.104521197759397, 47.47338430655955],
+                    [19.099814415072075, 47.47500039188631],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Papp" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.104374415056327, 47.50308463779044],
+                    [19.10387396682333, 47.50143228436178],
+                    [19.10783772130827, 47.50104144558051],
+                    [19.10760367075099, 47.502278130329586],
+                    [19.104374415056327, 47.50308463779044],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Atletika" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.069152465118037, 47.46550705470173],
+                    [19.068938292748783, 47.465002117244666],
+                    [19.06683079128061, 47.46203761404135],
+                    [19.06688382316213, 47.46180119952007],
+                    [19.067474398486837, 47.461714975346155],
+                    [19.072378790600652, 47.46194197556184],
+                    [19.073227131514415, 47.46456642833331],
+                    [19.069152465118037, 47.46550705470173],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Hajos" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.06361579610632, 47.541985283806724],
+                    [19.060873102413098, 47.54191343051065],
+                    [19.060364276343932, 47.54163520319122],
+                    [19.059624262304652, 47.54044484139601],
+                    [19.062717828761464, 47.54060700332957],
+                    [19.06361579610632, 47.541985283806724],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: {},
+              geometry: {
+                coordinates: [
+                  [
+                    [19.0423048792654, 47.52243391571872],
+                    [19.04208474772895, 47.5213981108202],
+                    [19.042164800257012, 47.520412572593386],
+                    [19.042331862339694, 47.5202090366123],
+                    [19.042463611354464, 47.52028052858799],
+                    [19.043034819187312, 47.52027262656458],
+                    [19.044089528557322, 47.51977166167015],
+                    [19.04489369596405, 47.521983969777324],
+                    [19.0423048792654, 47.52243391571872],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "BMTE" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.0273411305551, 47.42327698588514],
+                    [19.026864164231426, 47.42084965845848],
+                    [19.028789228607195, 47.42060283070646],
+                    [19.02962959794138, 47.42149308431678],
+                    [19.030112950370466, 47.42291255685595],
+                    [19.0273411305551, 47.42327698588514],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "Soroksar" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.11250164624093, 47.39192967029709],
+                    [19.111017672656885, 47.38975321612767],
+                    [19.112696742861715, 47.38908293949041],
+                    [19.11441047409295, 47.39127522470707],
+                    [19.11250164624093, 47.39192967029709],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+            {
+              type: "Feature",
+              properties: { team: "BVSC" },
+              geometry: {
+                coordinates: [
+                  [
+                    [19.094186400835753, 47.524534704952146],
+                    [19.091307306507844, 47.52502524259015],
+                    [19.089315783598835, 47.5250378889333],
+                    [19.08802973078798, 47.52274299555987],
+                    [19.087952002621165, 47.521992936746784],
+                    [19.088296601621693, 47.521036752638],
+                    [19.089350259948077, 47.52031624988791],
+                    [19.092644107763533, 47.52220333289867],
+                    [19.094186400835753, 47.524534704952146],
+                  ],
+                ],
+                type: "Polygon",
+              },
+            },
+          ],
+        },
+      ];
+
+      function stadiumColor(capacityNumber) {
+        if (capacityNumber < 5000) {
+          return "#00ff00";
+        } else if (capacityNumber < 10000) {
+          return "#ffff00";
+        } else if (capacityNumber < 20000) {
+          return "#ff8000";
+        } else if (capacityNumber < 70000) {
+          return "#ff0000";
+        } else {
+          return "#800000";
+        }
+      }
+
+      L.geoJSON(states, {
+        style: function (feature) {
+          switch (feature.properties.team) {
+            case "Ujpest":
+              return { color: stadiumColor(13501) };
+            case "Ferencvaros":
+              return { color: stadiumColor(23700) };
+            case "Honved":
+              return { color: stadiumColor(8200) };
+            case "MTK":
+              return { color: stadiumColor(5322) };
+            case "Vasas":
+              return { color: stadiumColor(5054) };
+            case "Valogatott":
+              return { color: stadiumColor(67215) };
+            case "MVM":
+              return { color: stadiumColor(20028) };
+            case "Papp":
+              return { color: stadiumColor(12500) };
+            case "Atletika":
+              return { color: stadiumColor(36000) };
+            case "Uszas":
+              return { color: stadiumColor(6000) };
+            case "Hajos":
+              return { color: stadiumColor(3500) };
+            case "BMTE":
+              return { color: stadiumColor(1200) };
+            case "Soroksar":
+              return { color: stadiumColor(5000) };
+            case "BVSC":
+              return { color: stadiumColor(11000) };
+          }
+        },
+      }).addTo(map);
+
+      function circleRadius(utilizationOfCapacity) {
+        if (utilizationOfCapacity < 0.25) {
+          return 250;
+        } else if (utilizationOfCapacity < 0.5) {
+          return 500;
+        } else if (utilizationOfCapacity < 0.75) {
+          return 750;
+        } else if (utilizationOfCapacity < 1) {
+          return 1000;
+        } else {
+          return 1500;
+        }
+      }
+
+      const ftcCircle = L.circle([47.47662579761196, 19.094536950174945], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.39),
+      }).addTo(map);
+
+      const mtkCircle = L.circle([47.49105147813091, 19.10683151182467], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.55),
+      }).addTo(map);
+
+      const ujpestCircle = L.circle([47.57508368328183, 19.08436769945224], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.47),
+      }).addTo(map);
+
+      const vasasCircle = L.circle([47.53721459803005, 19.080136149259044], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.3),
+      }).addTo(map);
+
+      const honvedCircle = L.circle([47.44290492465924, 19.155523437168647], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.29),
+      }).addTo(map);
+
+      const bvscCircle = L.circle([47.5241801849126, 19.092193997380274], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.06),
+      }).addTo(map);
+
+      const soroksarCircle = L.circle([47.39055358100065, 19.112686386413152], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.1),
+      }).addTo(map);
+
+      const bmteCircle = L.circle([47.42184991249716, 19.027735967508594], {
+        color: "purple",
+        fillColor: "purple",
+        fillOpacity: 0.5,
+        radius: circleRadius(0.74),
+      }).addTo(map);
+
+      var imageUrl = "puskas.png";
+      var errorOverlayUrl =
+        "https://cdn-icons-png.flaticon.com/512/110/110686.png";
+      var altText = "A Puskás Aréna";
+      var latLngBounds = L.latLngBounds([
+        [47.50480897749651, 19.100845567779785],
+        [47.5015701000003, 19.09543936263343],
+      ]);
+
+      var imageOverlay = L.imageOverlay(imageUrl, latLngBounds, {
+        opacity: 0.5,
+        errorOverlayUrl: errorOverlayUrl,
+        alt: altText,
+        interactive: true,
+      }).addTo(map);
+
+      L.rectangle(latLngBounds).addTo(map);
+      map.fitBounds(latLngBounds);
+    </script>
+  </body>
+</html>
